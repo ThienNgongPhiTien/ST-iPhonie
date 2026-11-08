@@ -1,3 +1,4 @@
+import './vi/overlay.js';
 import {installDiagnostics} from './core/runtime-diagnostics.js';
 import {probeStorage} from './core/idb.js';
 import {createStoryTools} from './host-tools.js';
