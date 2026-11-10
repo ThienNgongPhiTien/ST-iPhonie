@@ -7,6 +7,7 @@
 import {EXACT, PATTERNS} from './dict.js';
 import {EXACT2, SUBS, SUBR, PRE} from './extra.js';
 import {EXACT3, SUBS3, SUBR3} from './extra2.js';
+import {EXACT5, SUBS5, PRE5} from './extra3.js';
 
 const STORAGE_KEY = 'sttts-vi';
 const CJK = /[㐀-鿿]/;
@@ -283,14 +284,16 @@ const NEW_SUBR = [
 ];
 
 PRE.unshift(...NEW_PRE);
+PRE.push(...PRE5);
 SUBR.push(...NEW_SUBR);
 
 const exact = new Map(Object.entries(EXACT));
 for (const [k, v] of Object.entries(EXACT2)) exact.set(k, v);
 for (const [k, v] of Object.entries(EXACT3)) exact.set(k, v);
 for (const [k, v] of Object.entries(NEW_EXACT)) exact.set(k, v);
+for (const [k, v] of Object.entries(EXACT5)) if (!exact.has(k)) exact.set(k, v);
 
-const subs = [...SUBS, ...SUBS3, ...NEW_SUBS].sort((a, b) => b[0].length - a[0].length);
+const subs = [...SUBS, ...SUBS3, ...NEW_SUBS, ...SUBS5].sort((a, b) => b[0].length - a[0].length);
 const norm = s => s.replace(/\s+/g, ' ');
 const exactN = new Map();
 for (const [k, v] of exact) { const n = norm(k); if (n !== k && !exactN.has(n)) exactN.set(n, v); }
